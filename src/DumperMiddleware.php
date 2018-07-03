@@ -10,7 +10,6 @@ namespace Kachit\Container\Dumper;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use JBZoo\PimpleDumper\PimpleDumper;
-use Psr\Container\ContainerInterface;
 use Pimple\Container;
 
 class DumperMiddleware
@@ -22,9 +21,9 @@ class DumperMiddleware
 
     /**
      * DumperMiddleware constructor.
-     * @param ContainerInterface $container
+     * @param Container $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }
