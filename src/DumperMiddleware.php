@@ -20,12 +20,20 @@ class DumperMiddleware
     private $container;
 
     /**
-     * DumperMiddleware constructor.
-     * @param Container $container
+     * @var bool
      */
-    public function __construct(Container $container)
+    private $dump_mode_phpstorm = false;
+
+    /**
+     * DumperMiddleware constructor
+     *
+     * @param Container $container
+     * @param bool $dump_mode_phpstorm
+     */
+    public function __construct(Container $container, bool $dump_mode_phpstorm = true)
     {
         $this->container = $container;
+        $this->dump_mode_phpstorm = $dump_mode_phpstorm;
     }
 
     /**
@@ -40,7 +48,11 @@ class DumperMiddleware
     {
         if ($this->container['debug']) {
             $dumper = new PimpleDumper();
-            $dumper->dumpPimple($this->container);
+            if ($this->dump_mode_phpstorm) {
+                $dumper->dumpPhpstorm($this->container);
+            } else {
+                $dumper->dumpPimple($this->container);
+            }
         }
         return $next($request, $response);
     }
